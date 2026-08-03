@@ -1,0 +1,6 @@
+{
+  "name": "AI Career Command Center",
+  "description": "Multi-agent job discovery, ATS resume matching, contact research, Gmail draft preparation, application tracking, and daily notifications platform for Mahesh V.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
