@@ -31,7 +31,7 @@ export const WhatsAppModal: React.FC<WhatsAppModalProps> = ({
             </div>
             <div>
               <h2 className="text-lg font-serif italic text-zinc-100">Twilio WhatsApp Summary Connector</h2>
-              <p className="text-xs text-zinc-400">Agent E Daily Notification to Mahesh V (+91 98801 23456)</p>
+              <p className="text-xs text-zinc-400">Agent E Daily Notification to Mahesh V (+91 98865 49126)</p>
             </div>
           </div>
 
@@ -62,7 +62,7 @@ export const WhatsAppModal: React.FC<WhatsAppModalProps> = ({
 
             <div className="font-mono text-[11px] text-zinc-200 leading-relaxed space-y-2 bg-zinc-900/80 p-3 rounded-lg border border-zinc-800">
               <p className="font-bold text-emerald-400">📱 AI CAREER COMMAND CENTER — DAILY REPORT</p>
-              <p><strong>Recipient:</strong> Mahesh V (+91 98801 23456)</p>
+              <p><strong>Recipient:</strong> Mahesh V (+91 98865 49126)</p>
               <p className="text-zinc-600">------------------------------------</p>
               <p><strong>Daily Scout & ATS Summary:</strong></p>
               <p>• Total Jobs Discovered: {activeJobs.length}</p>

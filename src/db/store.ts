@@ -1,6 +1,7 @@
 import { AgentRun, ApplicationLog, ATSAnalysis, Job, JobContact, OutreachDraft, ResumeVariant } from '../types';
 import { evaluateATSScore } from '../services/atsEvaluator';
 import { RESUME_VARIANTS } from '../data/candidate';
+import { INITIAL_JOBS as FULL_INITIAL_JOBS } from '../data/jobDatabase';
 
 const INITIAL_JOBS: Job[] = [
   {
@@ -420,11 +421,11 @@ class Store {
   private drafts: OutreachDraft[] = [];
 
   constructor() {
-    this.jobs = JSON.parse(JSON.stringify(INITIAL_JOBS));
+    this.jobs = JSON.parse(JSON.stringify(FULL_INITIAL_JOBS));
     
     // Evaluate initial ATS analyses for each job
     for (const job of this.jobs) {
-      const { bestResume, analysis } = evaluateATSScore(job);
+      const { bestResume, analysis } = evaluateATSScore(job, this.resumes);
       job.atsAnalysis = analysis;
       job.atsScore = analysis.totalScore;
       job.matchedResumeId = bestResume.id;
@@ -568,7 +569,7 @@ class Store {
     };
 
     // Evaluate ATS
-    const { bestResume, analysis } = evaluateATSScore(createdJob);
+    const { bestResume, analysis } = evaluateATSScore(createdJob, this.resumes);
     createdJob.atsAnalysis = analysis;
     createdJob.atsScore = analysis.totalScore;
     createdJob.matchedResumeId = bestResume.id;
@@ -663,15 +664,14 @@ A few key highlights of my outcomes include:
 • Reduced production outages by ~60% by implementing proactive observability, circuit breakers, and automated canary deployments.
 • Managed and mentored engineering organizations of 50+ headcount across Bengaluru and global remote hubs.
 
-I have attached my role-tailored résumé (${job.matchedResumeName}) for your review. I would welcome a brief 15-minute conversation to discuss how my architecture background and engineering leadership can support ${job.company}'s growth objectives.
+I would welcome a brief 15-minute conversation to discuss how my architecture background and engineering leadership can support ${job.company}'s growth objectives.
 
 Best regards,
 
 Mahesh V
 Bengaluru, Karnataka, India
-Email: mahesh.virupa@gmail.com | Phone: +91 98801 23456
-LinkedIn: https://www.linkedin.com/in/mahesh-virupa
-Attachment: ${job.matchedResumeName}`;
+Email: mahesh.virupa@gmail.com | Phone: +91 98865 49126
+LinkedIn: https://www.linkedin.com/in/mahesh-v-8187476`;
 
     const draftId = `draft_gmail_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
     const draftLink = `https://mail.google.com/mail/u/0/#drafts`;
@@ -731,8 +731,61 @@ Attachment: ${job.matchedResumeName}`;
     this.agentRuns.unshift(run);
   }
 
+  private resumes: ResumeVariant[] = [...RESUME_VARIANTS];
+
   public getResumes(): ResumeVariant[] {
-    return RESUME_VARIANTS;
+    return this.resumes;
+  }
+
+  public addResume(newResume: Omit<ResumeVariant, 'id'>): ResumeVariant {
+    const resume: ResumeVariant = {
+      id: `res_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+      storagePath: `/resumes/${newResume.fileName}`,
+      ...newResume
+    };
+    this.resumes.push(resume);
+
+    // Re-evaluate all jobs against the new uploaded resume
+    for (const job of this.jobs) {
+      const { bestResume, analysis } = evaluateATSScore(job, this.resumes);
+      job.atsAnalysis = analysis;
+      job.atsScore = analysis.totalScore;
+      job.matchedResumeId = bestResume.id;
+      job.matchedResumeName = bestResume.fileName;
+    }
+
+    this.addLog({
+      jobId: 'system',
+      jobTitle: 'Résumé Vault Update',
+      company: 'System',
+      eventType: 'STATUS_CHANGED',
+      notes: `New custom résumé variant uploaded: ${resume.fileName} (${resume.roleType}). All jobs re-evaluated against new uploaded résumé.`
+    });
+    return resume;
+  }
+
+  public deleteResume(id: string): ResumeVariant[] {
+    this.resumes = this.resumes.filter(r => r.id !== id);
+    this.addLog({
+      jobId: 'system',
+      jobTitle: 'Résumé Vault Update',
+      company: 'System',
+      eventType: 'STATUS_CHANGED',
+      notes: `Deleted résumé variant (ID: ${id}).`
+    });
+    return this.resumes;
+  }
+
+  public deleteAllResumes(): ResumeVariant[] {
+    this.resumes = [];
+    this.addLog({
+      jobId: 'system',
+      jobTitle: 'Résumé Vault Reset',
+      company: 'System',
+      eventType: 'STATUS_CHANGED',
+      notes: `Cleared all existing résumés from Vault. Ready for fresh user upload.`
+    });
+    return this.resumes;
   }
 }
 

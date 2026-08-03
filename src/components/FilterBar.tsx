@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, Search, Trash2, RotateCcw, X, ShieldAlert } from 'lucide-react';
+import { Filter, Search, Trash2, RotateCcw, X, Calendar } from 'lucide-react';
 import { FilterState } from '../types';
 
 interface FilterBarProps {
@@ -32,14 +32,16 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     filters.status !== 'all' ||
     filters.minAtsScore > 0 ||
     filters.resumeType !== 'all' ||
-    filters.hasVerifiedContacts !== 'all';
+    filters.hasVerifiedContacts !== 'all' ||
+    Boolean(filters.startDate) ||
+    Boolean(filters.endDate);
 
   return (
     <div className="bg-[#111113] border border-zinc-800 rounded-xl p-3.5 mb-4 text-xs text-zinc-300 shadow-sm">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+      <div className="flex flex-col gap-3">
         
-        {/* Left Section: Search & Active/Deleted Tab Switcher */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        {/* Top Row: Switcher & Search Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-2.5">
           
           {/* Active vs Soft Deleted Switcher */}
           <div className="inline-flex rounded-lg bg-[#0A0A0B] p-1 border border-zinc-800">
@@ -70,29 +72,29 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           {/* Search Box */}
-          <div className="relative min-w-[220px] flex-1">
+          <div className="relative min-w-[280px] flex-1">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500" />
             <input
               type="text"
               placeholder="Search by company, role title, skills, location..."
               value={filters.searchQuery}
               onChange={(e) => handleChange('searchQuery', e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 bg-[#0A0A0B] border border-zinc-800 rounded-lg text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 text-xs font-sans"
+              className="w-full pl-8 pr-8 py-1.5 bg-[#0A0A0B] border border-zinc-800 rounded-lg text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 text-xs font-sans"
             />
             {filters.searchQuery && (
               <button
                 onClick={() => handleChange('searchQuery', '')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
               >
-                <X className="h-3 w-3" />
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>
 
         </div>
 
-        {/* Right Section: Dropdown Filter Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        {/* Bottom Row: Filters including Calendar Date Range */}
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-zinc-800/60">
           
           {/* Location Filter */}
           <select
@@ -146,6 +148,39 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             <option value="Rejected">Status: Rejected</option>
           </select>
 
+          {/* Calendar Date Range Picker */}
+          <div className="flex items-center space-x-1.5 bg-[#0A0A0B] border border-zinc-800 rounded-lg px-2 py-1">
+            <Calendar className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
+            <span className="text-zinc-500 font-mono text-[11px]">Date:</span>
+            <input
+              type="date"
+              value={filters.startDate || ''}
+              onChange={(e) => handleChange('startDate', e.target.value)}
+              className="bg-transparent text-zinc-200 text-xs focus:outline-none font-mono cursor-pointer"
+              title="Filter jobs posted/discovered from this date"
+            />
+            <span className="text-zinc-600">to</span>
+            <input
+              type="date"
+              value={filters.endDate || ''}
+              onChange={(e) => handleChange('endDate', e.target.value)}
+              className="bg-transparent text-zinc-200 text-xs focus:outline-none font-mono cursor-pointer"
+              title="Filter jobs posted/discovered up to this date"
+            />
+            {(filters.startDate || filters.endDate) && (
+              <button
+                onClick={() => {
+                  handleChange('startDate', '');
+                  handleChange('endDate', '');
+                }}
+                className="text-zinc-500 hover:text-zinc-300 pl-1"
+                title="Clear date range filter"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            )}
+          </div>
+
           {/* Reset Filters button */}
           {isFiltered && (
             <button
@@ -154,7 +189,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               title="Clear all active filters"
             >
               <RotateCcw className="h-3 w-3 text-zinc-400" />
-              <span>Reset</span>
+              <span>Reset Filters</span>
             </button>
           )}
 

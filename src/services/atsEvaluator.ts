@@ -1,20 +1,29 @@
 import { ATSAnalysis, Job, ResumeVariant } from '../types';
 import { MAHESH_PROFILE, RESUME_VARIANTS } from '../data/candidate';
 
-export function evaluateATSScore(job: Job): { bestResume: ResumeVariant; analysis: ATSAnalysis } {
+export function evaluateATSScore(job: Job, customResumes?: ResumeVariant[]): { bestResume: ResumeVariant; analysis: ATSAnalysis } {
   const descLower = job.description.toLowerCase();
   const titleLower = job.title.toLowerCase();
 
-  // 1. Select Best Résumé Variant based on job title & responsibilities
-  let bestResume = RESUME_VARIANTS[0]; // default Director of Engineering
-  if (titleLower.includes('architect')) {
-    bestResume = RESUME_VARIANTS.find(r => r.id === 'res_arch') || RESUME_VARIANTS[3];
+  const activeVariants = customResumes && customResumes.length > 0 ? customResumes : RESUME_VARIANTS;
+
+  // Check if candidate uploaded a new custom resume
+  const uploadedResumes = activeVariants.filter(r => 
+    !['res_arch', 'res_principal_eng', 'res_sr_eng_mgr', 'res_dir_eng'].includes(r.id)
+  );
+
+  // 1. Select Best Résumé Variant - prioritize latest uploaded resume if present
+  let bestResume = activeVariants[activeVariants.length - 1]; // Default to newest
+  if (uploadedResumes.length > 0) {
+    bestResume = uploadedResumes[uploadedResumes.length - 1];
+  } else if (titleLower.includes('architect')) {
+    bestResume = activeVariants.find(r => r.id === 'res_arch' || r.roleType.toLowerCase().includes('architect')) || activeVariants[0];
   } else if (titleLower.includes('principal') || titleLower.includes('staff') || titleLower.includes('tech lead')) {
-    bestResume = RESUME_VARIANTS.find(r => r.id === 'res_principal_eng') || RESUME_VARIANTS[2];
+    bestResume = activeVariants.find(r => r.id === 'res_principal_eng' || r.roleType.toLowerCase().includes('principal')) || activeVariants[0];
   } else if (titleLower.includes('senior engineering manager') || titleLower.includes('engineering manager')) {
-    bestResume = RESUME_VARIANTS.find(r => r.id === 'res_sr_eng_mgr') || RESUME_VARIANTS[1];
+    bestResume = activeVariants.find(r => r.id === 'res_sr_eng_mgr' || r.roleType.toLowerCase().includes('manager')) || activeVariants[0];
   } else {
-    bestResume = RESUME_VARIANTS.find(r => r.id === 'res_dir_eng') || RESUME_VARIANTS[0];
+    bestResume = activeVariants.find(r => r.id === 'res_dir_eng' || r.roleType.toLowerCase().includes('director')) || activeVariants[0];
   }
 
   // 2. Component Scoring (0-20 each)

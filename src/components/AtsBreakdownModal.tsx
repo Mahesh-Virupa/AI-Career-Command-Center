@@ -104,7 +104,7 @@ export const AtsBreakdownModal: React.FC<AtsBreakdownModalProps> = ({
                 <div className={`text-3xl font-light font-mono ${
                   (tailorSuccess ? 96 : job.atsScore) >= 80 ? 'text-emerald-400' : 'text-rose-400'
                 }`}>
-                  {tailorSuccess ? 96 : job.atsScore}<span className="text-lg text-zinc-600">/100</span>
+                  {tailorSuccess ? 96 : job.atsScore}
                 </div>
               </div>
 

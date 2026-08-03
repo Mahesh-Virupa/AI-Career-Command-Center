@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Header } from './components/Header';
+import { MovingTicker } from './components/MovingTicker';
 import { KpiCards } from './components/KpiCards';
 import { FilterBar } from './components/FilterBar';
 import { JobGridTable } from './components/JobGridTable';
@@ -145,6 +146,25 @@ export default function App() {
       result = result.filter(j => j.atsScore >= 80);
     }
 
+    // Calendar Date Range Filter
+    if (filters.startDate) {
+      const startMs = new Date(filters.startDate).getTime();
+      result = result.filter(j => {
+        const postedMs = new Date(j.postedAt).getTime();
+        const discMs = new Date(j.discoveredAt).getTime();
+        return postedMs >= startMs || discMs >= startMs;
+      });
+    }
+
+    if (filters.endDate) {
+      const endMs = new Date(`${filters.endDate}T23:59:59.999`).getTime();
+      result = result.filter(j => {
+        const postedMs = new Date(j.postedAt).getTime();
+        const discMs = new Date(j.discoveredAt).getTime();
+        return postedMs <= endMs || discMs <= endMs;
+      });
+    }
+
     // Sorting Logic
     result.sort((a, b) => {
       let valA: any = a[sortState.column];
@@ -182,19 +202,15 @@ export default function App() {
     }
   };
 
-  // Prepare & Directly Launch Gmail Compose with Contacts, Subject, Body & Downloaded PDF
+  // Prepare & Directly Launch Gmail Compose with Contacts, Subject & Body
   const handlePrepareGmailDraft = async (job: Job) => {
     try {
       const res = await fetch(`/api/jobs/${job.id}/gmail-draft`, { method: 'POST' });
       const data = await res.json();
       if (data.success) {
         const draft = data.data.draft;
-        setCreatedDraft({ job: data.data.job, draft });
         
-        // 1. Download PDF Resume automatically
-        handleDownloadResume(job.matchedResumeName);
-
-        // 2. Open Gmail Compose directly in new tab with pre-filled To, Subject, and Body
+        // Open Gmail Compose directly in new tab with pre-filled To, Subject, and Body (no modal popup, no pdf download)
         const recipientsList = draft.recipients.map((r: string) => {
           const match = r.match(/<([^>]+)>/);
           return match ? match[1] : r;
@@ -202,7 +218,7 @@ export default function App() {
         const composeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientsList)}&su=${encodeURIComponent(draft.subject)}&body=${encodeURIComponent(draft.bodyText)}`;
         window.open(composeUrl, '_blank', 'noopener,noreferrer');
 
-        showToast(`🚀 Gmail Compose opened! PDF Résumé (${job.matchedResumeName}) downloaded for 1-click attachment.`);
+        showToast(`🚀 Gmail Compose opened for ${job.company}!`);
         await fetchJobsAndLogs();
       } else {
         showToast(`Error: ${data.error}`);
@@ -281,15 +297,34 @@ export default function App() {
     window.open(`/api/resumes/${encodeURIComponent(fileName)}/download`, '_blank');
   };
 
-  // Dispatch Test WhatsApp Alert
+  // Dispatch Test WhatsApp Alert directly to user's phone via WhatsApp Web/App
   const handleSendTestWhatsApp = async () => {
     setIsSendingWhatsApp(true);
     try {
-      const res = await fetch('/api/notifications/whatsapp', { method: 'POST' });
-      const data = await res.json();
-      if (data.success) {
-        showToast('Twilio WhatsApp daily summary payload dispatched to Mahesh V (+91 98801 23456)!');
-      }
+      const active = jobs.filter(j => !j.deletedAt);
+      const highMatches = active.filter(j => j.atsScore >= 80);
+
+      let waText = `📱 *AI CAREER COMMAND CENTER — DAILY REPORT*\n`;
+      waText += `*Candidate:* Mahesh V (+91 98865 49126)\n`;
+      waText += `------------------------------------\n`;
+      waText += `• Total Jobs Discovered: ${active.length}\n`;
+      waText += `• High ATS Matches (≥80): ${highMatches.length}\n`;
+      waText += `------------------------------------\n`;
+      waText += `*Top Priority Opportunities:*\n`;
+
+      highMatches.slice(0, 5).forEach((j, i) => {
+        waText += `${i + 1}. *${j.title}* at *${j.company}*\n   ATS Score: ${j.atsScore} | Location: ${j.location}\n`;
+      });
+
+      waText += `\nDirect Dashboard: ${window.location.origin}`;
+
+      // Open WhatsApp direct message link to user's WhatsApp number +91 9886549126
+      const waUrl = `https://api.whatsapp.com/send?phone=919886549126&text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+      // Call API log
+      await fetch('/api/notifications/whatsapp', { method: 'POST' });
+      showToast('🚀 WhatsApp opened with your prefilled daily job digest for +91 9886549126!');
     } catch (err: any) {
       showToast('WhatsApp dispatch failed: ' + err.message);
     } finally {
@@ -322,6 +357,9 @@ export default function App() {
         lastRunTime={agentRuns[0]?.startedAt}
       />
 
+      {/* Moving Live Crawler Ticker at Top */}
+      <MovingTicker onTriggerLiveCrawl={handleRunPipeline} isCrawling={isRunningPipeline} />
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
         {/* KPI Summary Cards */}
@@ -340,7 +378,9 @@ export default function App() {
             minAtsScore: 80,
             showDeleted: false,
             resumeType: 'all',
-            hasVerifiedContacts: 'all'
+            hasVerifiedContacts: 'all',
+            startDate: '',
+            endDate: ''
           })}
           totalActiveCount={totalActiveCount}
           totalDeletedCount={totalDeletedCount}
@@ -392,6 +432,7 @@ export default function App() {
         <ResumeVaultModal
           onClose={() => setIsResumeModalOpen(false)}
           onDownloadResume={handleDownloadResume}
+          onResumesUpdated={fetchJobsAndLogs}
         />
       )}
 

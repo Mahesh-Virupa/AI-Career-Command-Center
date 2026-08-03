@@ -3,28 +3,30 @@ import { CandidateProfile, ResumeVariant } from '../types';
 export const MAHESH_PROFILE: CandidateProfile = {
   name: 'Mahesh V',
   email: 'mahesh.virupa@gmail.com',
-  phone: '+91 98801 23456',
-  location: 'Bengaluru, India',
+  phone: '+91 98865 49126',
+  location: 'Bengaluru, Karnataka, India',
   experienceYears: 22,
   coreSkills: [
     'Java',
     'J2EE',
     'Spring Boot',
-    'REST APIs',
+    'REST Services',
+    'gRPC',
     'Microservices',
     'Kafka',
     'Distributed Systems',
     'High Availability',
-    'Observability & Reliability'
+    'Observability (Splunk, Dynatrace)',
+    'Claude Code / Copilot / Cursor'
   ],
-  databases: ['SQL', 'Oracle', 'DB2', 'Cassandra', 'Redis'],
-  cloudAndOps: ['AWS', 'Kubernetes', 'Docker', 'CI/CD', 'DevOps'],
-  domains: ['Banking', 'Payments', 'Mortgages', 'Retail', 'Merchandising Systems'],
+  databases: ['SQL', 'Oracle', 'DB2', 'NoSQL', 'Cassandra', 'Redis', 'MongoDB'],
+  cloudAndOps: ['AWS', 'Kubernetes', 'Docker', 'OpenShift', 'CI/CD', 'Jenkins', 'GitHub Actions'],
+  domains: ['Banking Payments Hubs', 'Customer Profile Management', 'Retail Merchandising Optimization', 'Loan Mortgages'],
   outcomes: {
-    transactionScaling: 'Scaled transaction volume by ~5x across core banking & payment rails',
-    latencyReduction: 'Reduced P99 service latency by ~50% through microservice redesign and Redis caching',
-    incidentReduction: 'Reduced production incidents by ~60% via circuit breakers, telemetry, and automated rollbacks',
-    availability: 'Maintained 99.99% multi-region platform availability across peak merchant trading events'
+    transactionScaling: 'Scaled transaction volume 5x baseline while cutting latency by 50%',
+    latencyReduction: 'Decomposed monolithic payments to event-driven microservices, cutting downtime from 2% to 0.01%',
+    incidentReduction: 'Designed observability architecture (Splunk/Dynatrace), cutting production incidents by 60%',
+    availability: 'Maintained 99.99% multi-region active-active fault-tolerant payments infrastructure'
   },
   absentSkills: [
     'Python',
@@ -42,139 +44,22 @@ export const MAHESH_PROFILE: CandidateProfile = {
 
 export const RESUME_VARIANTS: ResumeVariant[] = [
   {
-    id: 'res_dir_eng',
-    roleType: 'Director of Engineering',
-    displayName: 'Director of Engineering Résumé',
-    fileName: 'Mahesh_V_Director_of_Engineering.pdf',
-    storagePath: '/resumes/Mahesh_V_Director_of_Engineering.pdf',
-    keywords: [
-      'Engineering Leadership',
-      'Director of Engineering',
-      'Team Building (50+ Engineers)',
-      'Strategic Vision',
-      'Spring Boot Architecture',
-      'Kafka Event-Driven Platform',
-      'AWS Cloud Governance',
-      'Fintech & Banking Scale',
-      'Budget & Resource Management'
-    ],
-    targetRoles: [
-      'Director of Engineering',
-      'Director of Software Engineering',
-      'Engineering Senior Manager',
-      'Platform Engineering Leader'
-    ],
-    extractedText: `MAHESH V
-Bengaluru, Karnataka, India | mahesh.virupa@gmail.com | +91 98801 23456 | linkedin.com/in/mahesh-virupa
-
-SUMMARY:
-Results-driven Engineering Leader & Director of Software Engineering with 20+ years of enterprise experience building scalable distributed platforms in Banking, Payments, Mortgages, and Retail. Proven track record leading multi-disciplinary engineering teams (50+ headcount), driving technical roadmaps, and modernizing legacy monoliths into high-throughput Java/Spring Boot microservices on AWS and Kubernetes.
-
-CORE COMPETENCIES:
-• Leadership: Engineering Strategy, Team Scaling, Org Design, Hiring, Talent Mentorship, Budgeting.
-• Architecture & Tech Stack: Java, J2EE, Spring Boot, REST APIs, Microservices, Apache Kafka, Distributed Systems.
-• Data & Caching: SQL, Oracle, DB2, Apache Cassandra, Redis.
-• Cloud & DevOps: AWS (EC2, EKS, S3, RDS, IAM), Kubernetes, Docker, CI/CD, Observability, Production Reliability.
-• Domain Expertise: Core Banking, Payment Gateway Rails, Mortgage Origination, Retail Merchandising.
-
-KEY OUTCOMES & ACHIEVEMENTS:
-• Scaled transaction processing volume by 5x to support 50M+ daily active operations.
-• Reduced P99 system response latency by 50% across payment checkout gateways.
-• Decreased critical P1/P2 production incidents by 60% through proactive observability & circuit breakers.
-• Built and mentored high-performing engineering organizations across Bengaluru and global remote hubs.`
-  },
-  {
-    id: 'res_sr_eng_mgr',
-    roleType: 'Senior Engineering Manager',
-    displayName: 'Senior Engineering Manager Résumé',
-    fileName: 'Mahesh_V_Senior_Engineering_Manager.pdf',
-    storagePath: '/resumes/Mahesh_V_Senior_Engineering_Manager.pdf',
-    keywords: [
-      'Senior Engineering Manager',
-      'People Management',
-      'Agile Execution',
-      'Sprint Delivery',
-      'Java & Spring Boot',
-      'Kafka Streaming',
-      'DevOps Practices',
-      'Mentorship & Hiring',
-      'High-Availability Systems'
-    ],
-    targetRoles: [
-      'Senior Engineering Manager',
-      'Engineering Senior Manager'
-    ],
-    extractedText: `MAHESH V
-Bengaluru, Karnataka, India | mahesh.virupa@gmail.com | +91 98801 23456 | linkedin.com/in/mahesh-virupa
-
-SUMMARY:
-Senior Engineering Manager with 20+ years of software engineering expertise and 8+ years leading high-performing engineering squads delivering mission-critical Java, Spring Boot, and Kafka microservices in banking and retail domains. Expert in agile delivery, engineering execution, technical mentorship, and platform reliability.
-
-CORE COMPETENCIES:
-• People & Delivery Management: OKRs, Agile Execution, Performance Reviews, Cross-functional Stakeholder Management.
-• Engineering & Systems: Java, Spring Boot, Microservices, RESTful APIs, Event-Driven Architecture with Kafka.
-• Databases & Infrastructure: Oracle, DB2, Cassandra, Redis, AWS, Kubernetes, Docker, Terraform, CI/CD pipelines.
-• Quality & Operations: Telemetry (Prometheus, Grafana), Incident Command, Disaster Recovery, SLO/SLA Management.
-
-KEY OUTCOMES:
-• Led 4 engineering squads (30+ engineers) delivering 99.99% availability for core payment settlement APIs.
-• Cut customer ticket resolution time by 45% by championing automated regression suites and CI/CD pipelines.
-• Reduced production outages by 60% through automated rollbacks and canary deployments.`
-  },
-  {
-    id: 'res_principal_eng',
-    roleType: 'Principal Engineer',
-    displayName: 'Principal Engineer Résumé',
-    fileName: 'Mahesh_V_Principal_Engineer.pdf',
-    storagePath: '/resumes/Mahesh_V_Principal_Engineer.pdf',
-    keywords: [
-      'Principal Engineer',
-      'Hands-On Distributed Systems',
-      'Low Latency Optimization',
-      'Java Performance Tuning',
-      'Spring Boot Core',
-      'Kafka Event Streaming',
-      'Cassandra Data Modeling',
-      'Kubernetes',
-      'System Resilience'
-    ],
-    targetRoles: [
-      'Principal Engineer',
-      'Principal Software Engineer'
-    ],
-    extractedText: `MAHESH V
-Bengaluru, Karnataka, India | mahesh.virupa@gmail.com | +91 98801 23456 | linkedin.com/in/mahesh-virupa
-
-SUMMARY:
-Hands-on Principal Software Engineer with 20+ years designing and implementing resilient, ultra-low-latency distributed platforms. Industry veteran in core Java, J2EE, Spring Boot, Kafka, and high-concurrency database architecture across financial, payment, and merchandising networks.
-
-CORE COMPETENCIES:
-• Hands-On Engineering: Deep Core Java internals, JVM Tuning, Garbage Collection, Asynchronous IO, Concurrency.
-• Distributed Systems & Messaging: Apache Kafka, Event Sourcing, CQRS, Distributed Locking, Redis Caching.
-• Data Persistence: SQL Tuning, Oracle DB, IBM DB2, Apache Cassandra Columnar Data Modeling.
-• Cloud Native Architecture: AWS Cloud infrastructure, Docker, Kubernetes deployment, Helm, Service Mesh.
-
-KEY OUTCOMES:
-• Engineered low-latency event processing pipeline handling 100,000 events/sec with sub-20ms latency.
-• Achieved 50% latency reduction by optimizing DB queries, JVM parameters, and multi-tier Redis caching.
-• Designed zero-downtime database migration strategy from legacy DB2 to high-throughput Cassandra cluster.`
-  },
-  {
     id: 'res_arch',
     roleType: 'Software Architect',
-    displayName: 'Software Architect Résumé',
-    fileName: 'Mahesh_V_Software_Architect.pdf',
-    storagePath: '/resumes/Mahesh_V_Software_Architect.pdf',
+    displayName: 'Software Architect — Enterprise & Solution Architecture',
+    fileName: 'Mahesh_V_Enterprise_Solution_Architect.pdf',
+    storagePath: '/resumes/Mahesh_V_Enterprise_Solution_Architect.pdf',
     keywords: [
-      'Enterprise Architect',
       'Software Architect',
-      'System Design',
-      'Java & Spring Boot Standard',
-      'Microservices Transformation',
-      'AWS Multi-Region',
-      'Observability',
-      'Security & Banking Standards',
-      'API Gateway & gRPC'
+      'Enterprise Architecture',
+      'Solution Architecture',
+      'Java / J2EE',
+      'Spring Boot & REST Services',
+      'Kafka Event-Driven',
+      'AWS & Kubernetes',
+      'Multi-Region Active-Active Topologies',
+      'Oracle / DB2 / Cassandra / Redis',
+      'JPMorgan Chase VP'
     ],
     targetRoles: [
       'Software Architect',
@@ -182,20 +67,147 @@ KEY OUTCOMES:
       'Principal Architect'
     ],
     extractedText: `MAHESH V
-Bengaluru, Karnataka, India | mahesh.virupa@gmail.com | +91 98801 23456 | linkedin.com/in/mahesh-virupa
+Software Architect | Enterprise & Solution Architecture
+Bengaluru, Karnataka | +91-9886549126 | mahesh.virupa@gmail.com | linkedin.com/in/mahesh-v-8187476
 
-SUMMARY:
-Enterprise & Software Architect with 20+ years crafting robust enterprise blueprints, cloud-native architectures, and microservice migration strategies for global banking, payment, and retail enterprises. Proven track record establishing architectural standards, API governance, security compliance, and high availability.
+PROFILE SUMMARY
+Software and Enterprise Architect with over two decades of experience designing large-scale, highly available systems in Java/J2EE (Spring Boot, REST Services, Kafka), SQL (Oracle/DB2) and NoSQL (Cassandra/Redis), and cloud-native infrastructure (AWS, Kubernetes, Docker). Deep expertise architecting highly available, fault-tolerant multi-region distributed systems, including active-active and active-passive topologies, disaster recovery planning, and data residency/sovereignty controls across jurisdictions. Led the architectural decomposition of monolithic payment and Customer Profile services into event-driven, auto-scaling microservices, cutting downtime from 2% to 0.01%. Domain expertise spans Banking Payments Hubs, Customer Profile Management, Retail Merchandising Optimization, and Loan Mortgage systems. Certified AWS Cloud Practitioner; recognized with the IBM Outstanding Technical Achievement Award.
 
-CORE COMPETENCIES:
-• Architecture Patterns: Domain-Driven Design (DDD), Microservices, Event-Driven Architecture, Multi-Region Active-Active.
-• Technical Stack: Java, J2EE, Spring Boot, REST APIs, GraphQL, Kafka, AWS, Kubernetes, Docker.
-• Data & Storage Architecture: Oracle, DB2, Cassandra, Redis, Data Replication & Consistency.
-• Observability & Security: OAuth2, JWT, TLS, OpenTelemetry, Grafana, Prometheus, Disaster Recovery.
+WORK EXPERIENCE
+Vice President – Banking Payments & Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Since Feb 2021
+Associate Vice President - Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Oct 2017 – Feb 2021
+• Own solution architecture for multi-region, fault-tolerant payments infrastructure — designing active-active/active-passive failover topologies, disaster recovery plans, and data residency/sovereignty controls.
+• Lead architecture design reviews and define non-functional requirements (availability, scalability, security, compliance) for Payments and Customer Profile platforms.
+• Architected the decomposition of monolithic payment services and Customer Profile Gateway Services into modular, event-driven, auto-scaling microservices, cutting downtime from 2% to 0.01%.
+• Designed the architecture for Chase Bank Financial External Accounts Linkage system, scaling transaction volume to 5x baseline while cutting latency by 50%.
 
-KEY OUTCOMES:
-• Architected enterprise migration of legacy core banking monolith into 40+ modular Spring Boot microservices on AWS.
-• Reduced production outages by 60% with fault-tolerant circuit breakers, bulkhead isolation, and auto-scaling.
-• Established API governance guidelines adopted across 200+ global engineering teams.`
+Senior Staff Software Engineer to Advisory Software Engineer | IBM India Pvt. Ltd. (ISL), Bengaluru | Nov 2012 - Oct 2017
+System Analyst to Technical Anchor | Subex Technologies Ltd., Bengaluru | Jun 2007 - Nov 2012
+Software Engineer to Senior Software Engineer | Tavant Technologies, Bengaluru | Sep 2004 - Jun 2007
+
+EDUCATION
+Bachelor of Engineering (B.E.), Mechanical Engineering — UVCE, Bengaluru | 2000 - 2004 | 76.4%`
+  },
+  {
+    id: 'res_principal_eng',
+    roleType: 'Principal Engineer',
+    displayName: 'Principal Engineer — Distributed Systems & Payments',
+    fileName: 'Mahesh_V_Principal_Engineer.pdf',
+    storagePath: '/resumes/Mahesh_V_Principal_Engineer.pdf',
+    keywords: [
+      'Principal Engineer',
+      'Distributed Systems Architecture',
+      'Hands-On Code Review & RFC / ADR Authorship',
+      'Java & Spring Boot Core',
+      'Kafka Streaming',
+      'Multi-Region Active-Active Topologies',
+      'AWS & Kubernetes',
+      'Latency Optimization & JVM Tuning',
+      'AI-Assisted Workflows (Claude Code, Copilot)'
+    ],
+    targetRoles: [
+      'Principal Engineer',
+      'Principal Software Engineer'
+    ],
+    extractedText: `MAHESH V
+Principal Engineer | Distributed Systems & Payments Architecture
+Bengaluru, Karnataka | +91-9886549126 | mahesh.virupa@gmail.com | linkedin.com/in/mahesh-v-8187476
+
+PROFILE SUMMARY
+Hands-on Principal Engineer and technical leader with over two decades of experience personally writing and reviewing production code and architecting large-scale distributed systems in Java/J2EE (Spring Boot, REST Services, Kafka), SQL (Oracle/DB2) and NoSQL (Cassandra/Redis, MongoDB), and cloud-native infrastructure (AWS, Kubernetes, Docker). Author of formal design docs, RFCs, and architecture decision records (ADRs) for every major technical decision on Payments and Customer Profile platforms. Personally drove the architectural decomposition of monolithic payment and Customer Profile services into event-driven, auto-scaling microservices, cutting downtime from 2% to 0.01% and enabling bi-weekly deployments. Certified AWS Cloud Practitioner and recognized with IBM Outstanding Technical Achievement Award.
+
+WORK EXPERIENCE
+Vice President – Banking Payments & Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Since Feb 2021
+Associate Vice President - Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Oct 2017 – Feb 2021
+• Personally write and review production code and author formal RFCs / ADRs for every major technical decision across Payments and Customer Profile platforms.
+• Architected and hand-coded critical components of multi-region, fault-tolerant distributed payments infrastructure.
+• Run regular 1:1 technical deep-dives with senior and staff engineers on hard distributed-systems problems.
+• Authored technical design and RFC for, and personally coded core components of, Chase Bank Financial External Accounts Linkage system on AWS, scaling transaction volume 5x while cutting latency 50%.
+
+Senior Staff Software Engineer to Advisory Software Engineer | IBM India Pvt. Ltd., Bengaluru | Nov 2012 - Oct 2017
+System Analyst to Technical Anchor | Subex Technologies Ltd., Bengaluru | Jun 2007 - Nov 2012
+Software Engineer to Senior Software Engineer | Tavant Technologies, Bengaluru | Sep 2004 - Jun 2007`
+  },
+  {
+    id: 'res_dir_eng',
+    roleType: 'Director of Engineering',
+    displayName: 'Director Of Engineering — Vice President, Engineering',
+    fileName: 'Mahesh_V_Director_Of_Engineering.pdf',
+    storagePath: '/resumes/Mahesh_V_Director_Of_Engineering.pdf',
+    keywords: [
+      'Director of Engineering',
+      'VP Engineering',
+      'Engineering Strategy & Technical Vision',
+      'Org Scaling (50+ Engineers)',
+      'OKRs & Goal Setting',
+      'AI-First Engineering Culture',
+      'Payments & Customer Profile Platforms',
+      'Vendor & Budget Management',
+      'JPMorgan Chase Vice President'
+    ],
+    targetRoles: [
+      'Director of Engineering',
+      'Director of Software Engineering',
+      'Platform Engineering Leader'
+    ],
+    extractedText: `MAHESH V
+Director Of Engineering | Vice President, Engineering
+Bengaluru, Karnataka | +91-9886549126 | mahesh.virupa@gmail.com | linkedin.com/in/mahesh-v-8187476
+
+PROFILE SUMMARY
+Seasoned technology leader with over two decades of experience in software engineering, enterprise architecture, and product development, with deep expertise using AI-assisted development in Java/J2EE (Spring Boot, REST Services, Kafka), SQL (Oracle/DB2) and NoSQL (Cassandra/Redis) databases, and DevOps tools (CI/CD, Kubernetes, Docker). Currently Vice President at JPMorgan Chase, owning engineering strategy, technical vision, organizational scaling, and program financial forecasting across Payments and Customer Profile platforms. Track record of building and scaling high-performing global engineering organizations to 50+ engineers and architects, including hiring, onboarding, mentorship, performance management, and succession planning for engineering managers.
+
+WORK EXPERIENCE
+Vice President – Banking Payments & Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Since Feb 2021
+Associate Vice President - Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Oct 2017 – Feb 2021
+• Own engineering strategy, technical vision, and organizational scaling for cross-functional engineering organization of 10–30 engineers, including 4+ people managers, across direct and vendor/outsourced teams (Accenture, Infosys, Virtusa).
+• Grew Customer Profile Management engineering organization from 2 to 50+ engineers and architects across geographies.
+• Set OKRs and quarterly goals for engineering managers and their teams, holding teams accountable to delivery and reliability outcomes.
+• Champion an AI-first engineering culture, driving org-wide adoption of Generative AI and LLM tooling (Claude Code, Codex, Copilot, Cursor, MCP).
+
+Senior Staff Software Engineer to Advisory Software Engineer | IBM India Pvt. Ltd. | Nov 2012 - Oct 2017
+System Analyst to Technical Anchor | Subex Technologies Ltd. | Jun 2007 - Nov 2012
+Software Engineer to Senior Software Engineer | Tavant Technologies | Sep 2004 - Jun 2007`
+  },
+  {
+    id: 'res_sr_eng_mgr',
+    roleType: 'Senior Engineering Manager',
+    displayName: 'Senior Engineering Manager — Vice President',
+    fileName: 'Mahesh_V_Senior_Engineering_Manager.pdf',
+    storagePath: '/resumes/Mahesh_V_Senior_Engineering_Manager.pdf',
+    keywords: [
+      'Senior Engineering Manager',
+      'Agile / Scrum Sprint Delivery',
+      '1:1 Coaching & Career Development',
+      'People Management (10-30 Engineers)',
+      'Hiring & Onboarding Pipelines',
+      'Incident & On-Call Management',
+      'Java & Spring Boot Ecosystem',
+      'Kafka Event-Driven Microservices',
+      'Observability (Splunk / Dynatrace)'
+    ],
+    targetRoles: [
+      'Senior Engineering Manager',
+      'Engineering Senior Manager'
+    ],
+    extractedText: `MAHESH V
+Senior Engineering Manager | Vice President
+Bengaluru, Karnataka | +91-9886549126 | mahesh.virupa@gmail.com | linkedin.com/in/mahesh-v-8187476
+
+PROFILE SUMMARY
+Hands-on Senior Engineering Manager with over two decades of experience leading engineering teams, coaching people managers, and delivering mission-critical software in Java/J2EE (Spring Boot, REST Services, Kafka), SQL (Oracle/DB2) and NoSQL (Cassandra/Redis), and DevOps tooling (CI/CD, Kubernetes, Docker). Currently Vice President at JPMorgan Chase, directly managing a cross-functional engineering organization of 10–30 engineers, including 4+ people managers, running Agile/Scrum sprint delivery, 1:1 coaching, career development, and performance reviews. Proven ability to grow teams while protecting delivery quality — scaled Customer Profile Management organization from 2 to 50+ engineers.
+
+WORK EXPERIENCE
+Vice President – Banking Payments & Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Since Feb 2021
+Associate Vice President - Digital Global Technology | JPMorgan Chase & Co, Bengaluru, India | Oct 2017 – Feb 2021
+• Directly manage cross-functional engineering team of 10–30 engineers, including 4+ people managers, across direct and vendor/outsourced teams (Accenture, Infosys, Virtusa) — running sprint planning, backlog grooming, 1:1s, and performance reviews.
+• Grew Customer Profile Management team from 2 to 50+ engineers and architects.
+• Coach engineering managers and senior engineers on career development, technical growth plans, and AI-generalist skill building.
+• Own on-call and incident management practices for Payments platforms; championed proactive observability (Splunk, Dynatrace), cutting production incidents by 60%.
+
+Senior Staff Software Engineer to Advisory Software Engineer | IBM India Pvt. Ltd. | Nov 2012 - Oct 2017
+System Analyst to Technical Anchor | Subex Technologies Ltd. | Jun 2007 - Nov 2012
+Software Engineer to Senior Software Engineer | Tavant Technologies | Sep 2004 - Jun 2007`
   }
 ];
+

@@ -61,6 +61,10 @@ export interface JobContact {
   verificationNote: string;
   verifiedAt: string;
   confidence: ConfidenceLevel;
+  connectionDegree?: '1st' | '2nd' | '3rd+';
+  mutualConnectionName?: string;
+  mutualConnectionTitle?: string;
+  mutualConnectionLinkedinUrl?: string;
 }
 
 export interface ATSAnalysis {
@@ -158,6 +162,8 @@ export interface FilterState {
   showDeleted: boolean;
   resumeType: string;
   hasVerifiedContacts: string; // 'all' | 'yes' | 'no'
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface SortState {

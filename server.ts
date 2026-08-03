@@ -150,11 +150,55 @@ async function startServer() {
     }
   });
 
-  // 8. GET /api/resumes - List candidate's 4 role-specific resume variants
+  // 8. GET /api/resumes - List candidate's resume variants
   app.get('/api/resumes', (req, res) => {
     try {
       const resumes = store.getResumes();
       res.json({ success: true, data: resumes });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // 8b. DELETE /api/resumes/:id - Delete single resume variant
+  app.delete('/api/resumes/:id', (req, res) => {
+    try {
+      const resumes = store.deleteResume(req.params.id);
+      res.json({ success: true, message: 'Résumé deleted successfully', data: resumes });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // 8c. DELETE /api/resumes - Clear all existing resumes
+  app.delete('/api/resumes', (req, res) => {
+    try {
+      const resumes = store.deleteAllResumes();
+      res.json({ success: true, message: 'All résumés cleared from vault.', data: resumes });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // 8d. POST /api/resumes - Upload / Add a fresh resume variant
+  app.post('/api/resumes', express.json({ limit: '10mb' }), (req, res) => {
+    try {
+      const { roleType, displayName, fileName, extractedText, keywords, targetRoles } = req.body;
+      if (!fileName) {
+        return res.status(400).json({ success: false, error: 'File name is required' });
+      }
+
+      const newResume = store.addResume({
+        roleType: roleType || 'Custom Role Résumé',
+        displayName: displayName || fileName,
+        fileName,
+        storagePath: `/resumes/${fileName}`,
+        keywords: keywords && keywords.length > 0 ? keywords : ['Custom Résumé', 'Software Engineering', 'Enterprise Systems'],
+        targetRoles: targetRoles && targetRoles.length > 0 ? targetRoles : [roleType || 'Software Engineer'],
+        extractedText: extractedText || `CUSTOM UPLOADED RÉSUMÉ: ${fileName}\nContent parsed successfully.`
+      });
+
+      res.json({ success: true, message: 'New résumé uploaded successfully!', data: newResume, allResumes: store.getResumes() });
     } catch (error: any) {
       res.status(500).json({ success: false, error: error.message });
     }

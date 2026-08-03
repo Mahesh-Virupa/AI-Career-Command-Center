@@ -33,6 +33,21 @@ export const JobGridTable: React.FC<JobGridTableProps> = ({
 }) => {
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
+  const topScrollRef = React.useRef<HTMLDivElement>(null);
+  const tableScrollRef = React.useRef<HTMLDivElement>(null);
+
+  const handleTopScroll = () => {
+    if (topScrollRef.current && tableScrollRef.current) {
+      tableScrollRef.current.scrollLeft = topScrollRef.current.scrollLeft;
+    }
+  };
+
+  const handleTableScroll = () => {
+    if (topScrollRef.current && tableScrollRef.current) {
+      topScrollRef.current.scrollLeft = tableScrollRef.current.scrollLeft;
+    }
+  };
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedEmail(text);
@@ -68,9 +83,23 @@ export const JobGridTable: React.FC<JobGridTableProps> = ({
   };
 
   return (
-    <div className="bg-[#111113] border border-zinc-800 rounded-xl overflow-hidden shadow-xl">
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+    <div className="bg-[#111113] border border-zinc-800 rounded-xl shadow-xl relative">
+      {/* Sticky Floating Top Horizontal Scrollbar — stays at viewport top as user scrolls down */}
+      <div 
+        ref={topScrollRef} 
+        onScroll={handleTopScroll} 
+        className="sticky top-0 z-30 overflow-x-auto bg-[#0A0A0C]/95 backdrop-blur-md border-b border-indigo-900/50 py-1.5 px-3 flex items-center justify-between text-[10px] font-mono text-zinc-300 select-none cursor-pointer shadow-md rounded-t-xl"
+        title="Sticky top horizontal scroll bar — drag or scroll horizontally to move table left/right from anywhere on page"
+      >
+        <div className="flex items-center space-x-2 shrink-0 mr-3">
+          <span className="text-indigo-400 font-bold uppercase tracking-wider">◄ HORIZONTAL SCROLL BAR ►</span>
+          <span className="text-zinc-500 text-[9px] font-sans hidden sm:inline">(Scroll left/right to view all columns)</span>
+        </div>
+        <div className="w-[1300px] h-2 bg-gradient-to-r from-indigo-500/40 via-emerald-500/50 to-indigo-500/40 rounded-full shrink-0"></div>
+      </div>
+
+      <div ref={tableScrollRef} onScroll={handleTableScroll} className="overflow-x-auto rounded-b-xl">
+        <table className="w-full text-left border-collapse min-w-[1300px]">
           <thead>
             <tr className="bg-[#0A0A0B] text-zinc-400 text-[11px] font-mono border-b border-zinc-800 uppercase tracking-wider">
               <th className="py-3 px-3 w-12 text-center">#</th>
@@ -193,7 +222,7 @@ export const JobGridTable: React.FC<JobGridTableProps> = ({
                         }`}
                         title="Click to view full ATS score breakdown & component analysis"
                       >
-                        <span>{job.atsScore}/100</span>
+                        <span>{job.atsScore}</span>
                         {isPenalized && (
                           <AlertTriangle className="h-3 w-3 text-rose-400 animate-pulse" title="Mandatory Skill Mismatch Penalty Applied" />
                         )}
@@ -269,19 +298,46 @@ export const JobGridTable: React.FC<JobGridTableProps> = ({
                     <td className="py-3 px-3">
                       {hiringContact ? (
                         <div className="space-y-1">
-                          <div className="font-medium text-zinc-200 flex items-center justify-between">
-                            <span className="truncate max-w-[140px]">{hiringContact.name}</span>
+                          <div className="font-medium text-zinc-200 flex items-center justify-between gap-1">
+                            <span className="truncate max-w-[130px]">{hiringContact.name}</span>
                             <a 
                               href={hiringContact.linkedinUrl} 
                               target="_blank" 
                               rel="noreferrer"
-                              className="text-indigo-400 hover:text-indigo-300 p-0.5 bg-zinc-900 rounded border border-zinc-800 flex items-center space-x-1 px-1"
+                              className="text-indigo-400 hover:text-indigo-300 p-0.5 bg-zinc-900 rounded border border-zinc-800 flex items-center space-x-1 px-1 shrink-0"
                               title="Open verified profile search on LinkedIn"
                             >
                               <Linkedin className="h-3 w-3" />
                               <span className="text-[9px] font-mono">Profile</span>
                             </a>
                           </div>
+
+                          {/* Network Degree & Mutual Connection Link */}
+                          <div className="flex flex-col space-y-0.5">
+                            {hiringContact.connectionDegree === '1st' ? (
+                              <span className="inline-flex items-center space-x-1 w-max px-1.5 py-0.2 rounded text-[9px] font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                <span>🟢 1st Connection</span>
+                              </span>
+                            ) : (
+                              <div className="flex flex-col">
+                                <span className="inline-flex items-center space-x-1 w-max px-1.5 py-0.2 rounded text-[9px] font-mono font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                                  <span>🔵 2nd Connection</span>
+                                </span>
+                                {hiringContact.mutualConnectionName && (
+                                  <a 
+                                    href={hiringContact.mutualConnectionLinkedinUrl || hiringContact.linkedinUrl} 
+                                    target="_blank" 
+                                    rel="noreferrer" 
+                                    className="text-[9px] text-sky-400 hover:text-sky-300 hover:underline font-mono truncate max-w-[170px] mt-0.5"
+                                    title={`Request warm intro via mutual connection: ${hiringContact.mutualConnectionName}`}
+                                  >
+                                    Intro via: <strong>{hiringContact.mutualConnectionName}</strong>
+                                  </a>
+                                )}
+                              </div>
+                            )}
+                          </div>
+
                           <div className="text-[10px] text-zinc-500 truncate max-w-[180px]">{hiringContact.title}</div>
                           
                           {hiringContact.email && (
@@ -321,19 +377,46 @@ export const JobGridTable: React.FC<JobGridTableProps> = ({
                     <td className="py-3 px-3">
                       {hrContact ? (
                         <div className="space-y-1">
-                          <div className="font-medium text-zinc-200 flex items-center justify-between">
-                            <span className="truncate max-w-[140px]">{hrContact.name}</span>
+                          <div className="font-medium text-zinc-200 flex items-center justify-between gap-1">
+                            <span className="truncate max-w-[130px]">{hrContact.name}</span>
                             <a 
                               href={hrContact.linkedinUrl} 
                               target="_blank" 
                               rel="noreferrer"
-                              className="text-indigo-400 hover:text-indigo-300 p-0.5 bg-zinc-900 rounded border border-zinc-800 flex items-center space-x-1 px-1"
+                              className="text-indigo-400 hover:text-indigo-300 p-0.5 bg-zinc-900 rounded border border-zinc-800 flex items-center space-x-1 px-1 shrink-0"
                               title="Open verified profile search on LinkedIn"
                             >
                               <Linkedin className="h-3 w-3" />
                               <span className="text-[9px] font-mono">Profile</span>
                             </a>
                           </div>
+
+                          {/* Network Degree & Mutual Connection Link */}
+                          <div className="flex flex-col space-y-0.5">
+                            {hrContact.connectionDegree === '1st' ? (
+                              <span className="inline-flex items-center space-x-1 w-max px-1.5 py-0.2 rounded text-[9px] font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                <span>🟢 1st Connection</span>
+                              </span>
+                            ) : (
+                              <div className="flex flex-col">
+                                <span className="inline-flex items-center space-x-1 w-max px-1.5 py-0.2 rounded text-[9px] font-mono font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                                  <span>🔵 2nd Connection</span>
+                                </span>
+                                {hrContact.mutualConnectionName && (
+                                  <a 
+                                    href={hrContact.mutualConnectionLinkedinUrl || hrContact.linkedinUrl} 
+                                    target="_blank" 
+                                    rel="noreferrer" 
+                                    className="text-[9px] text-sky-400 hover:text-sky-300 hover:underline font-mono truncate max-w-[170px] mt-0.5"
+                                    title={`Request warm intro via mutual connection: ${hrContact.mutualConnectionName}`}
+                                  >
+                                    Intro via: <strong>{hrContact.mutualConnectionName}</strong>
+                                  </a>
+                                )}
+                              </div>
+                            )}
+                          </div>
+
                           <div className="text-[10px] text-zinc-500 truncate max-w-[180px]">{hrContact.title}</div>
                           
                           {hrContact.email && (
@@ -419,11 +502,10 @@ export const JobGridTable: React.FC<JobGridTableProps> = ({
                           {/* Direct Gmail Compose Icon Button */}
                           <button
                             onClick={() => onPrepareGmailDraft(job)}
-                            className="p-1.5 bg-zinc-100 hover:bg-white text-zinc-950 rounded-lg shadow-md transition-all active:scale-95 cursor-pointer flex items-center space-x-1 px-2"
-                            title="Open Gmail Compose with pre-filled contacts, subject, cold email & downloaded PDF resume"
+                            className="p-1.5 bg-zinc-100 hover:bg-white text-zinc-950 rounded-lg shadow-md transition-all active:scale-95 cursor-pointer"
+                            title="Open Gmail Compose directly with pre-filled details & download role-matched PDF résumé"
                           >
                             <Mail className="h-3.5 w-3.5 text-zinc-950 shrink-0" />
-                            <span className="text-[10px] font-bold font-mono">Mail</span>
                           </button>
 
                           {/* Soft Delete Action Icon Button */}
