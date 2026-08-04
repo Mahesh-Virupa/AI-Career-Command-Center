@@ -2,17 +2,45 @@ import { AgentRun, ApplicationLog, ATSAnalysis, Job, JobContact, OutreachDraft, 
 import { evaluateATSScore } from '../services/atsEvaluator';
 import { RESUME_VARIANTS } from '../data/candidate';
 import { INITIAL_JOBS as FULL_INITIAL_JOBS } from '../data/jobDatabase';
+import fs from 'fs';
+import path from 'path';
 
-const INITIAL_JOBS: Job[] = FULL_INITIAL_JOBS;
+const DB_FILE_PATH = path.resolve(process.cwd(), 'job_scout_database.json');
 
 class Store {
   private jobs: Job[] = [];
   private logs: ApplicationLog[] = [];
   private agentRuns: AgentRun[] = [];
   private drafts: OutreachDraft[] = [];
+  private resumes: ResumeVariant[] = [...RESUME_VARIANTS];
 
   constructor() {
+    this.loadFromDisk();
+  }
+
+  private loadFromDisk(): void {
+    try {
+      if (fs.existsSync(DB_FILE_PATH)) {
+        const fileData = fs.readFileSync(DB_FILE_PATH, 'utf-8');
+        const parsed = JSON.parse(fileData);
+        if (parsed && Array.isArray(parsed.jobs) && parsed.jobs.length > 0) {
+          this.jobs = parsed.jobs;
+          this.logs = parsed.logs || [];
+          this.agentRuns = parsed.agentRuns || [];
+          this.drafts = parsed.drafts || [];
+          if (Array.isArray(parsed.resumes) && parsed.resumes.length > 0) {
+            this.resumes = parsed.resumes;
+          }
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not read persistent DB file, seeding initial default state:', e);
+    }
+
+    // Seed default state if no disk DB exists
     this.jobs = JSON.parse(JSON.stringify(FULL_INITIAL_JOBS));
+    this.resumes = [...RESUME_VARIANTS];
     
     // Evaluate initial ATS analyses for each job
     for (const job of this.jobs) {
@@ -49,15 +77,32 @@ class Store {
       id: 'run_05am_today',
       agentName: 'Full Pipeline',
       status: 'Completed',
-      jobsFound: 8,
-      jobsAdded: 8,
+      jobsFound: 52,
+      jobsAdded: 52,
       draftsCreated: 0,
-      contactsVerified: 16,
-      summary: 'Daily 05:00 AM IST scheduled run executed successfully. Checked sources: Razorpay, Goldman Sachs, PhonePe, Swiggy, Standard Chartered, Adzuna, Stripe, Target India.',
+      contactsVerified: 68,
+      summary: 'Daily 05:00 AM IST scheduled run executed successfully. Appended jobs saved to persistent database.',
       sourcesChecked: ['Razorpay Careers', 'Goldman Sachs Portal', 'PhonePe Careers', 'Swiggy Lever API', 'Standard Chartered Workday', 'Adzuna Aggregator', 'Stripe Official', 'Target India Portal'],
       startedAt: new Date(Date.now() - 7 * 3600 * 1000).toISOString(),
       completedAt: new Date(Date.now() - 7 * 3600 * 1000 + 45000).toISOString()
     });
+
+    this.saveToDisk();
+  }
+
+  private saveToDisk(): void {
+    try {
+      const dataToSave = {
+        jobs: this.jobs,
+        logs: this.logs,
+        agentRuns: this.agentRuns,
+        drafts: this.drafts,
+        resumes: this.resumes
+      };
+      fs.writeFileSync(DB_FILE_PATH, JSON.stringify(dataToSave, null, 2), 'utf-8');
+    } catch (e) {
+      console.error('Failed to save store state to disk:', e);
+    }
   }
 
   public getJobs(showDeleted: boolean = false): Job[] {
@@ -86,6 +131,7 @@ class Store {
       notes: `Job application status updated from '${oldStatus}' to '${status}'.`
     });
 
+    this.saveToDisk();
     return job;
   }
 
@@ -103,6 +149,7 @@ class Store {
       notes: `Job soft-deleted from active tracker. Reason: ${reason}. Historical record preserved.`
     });
 
+    this.saveToDisk();
     return job;
   }
 
@@ -120,6 +167,7 @@ class Store {
       notes: `Job restored to active dashboard tracker.`
     });
 
+    this.saveToDisk();
     return job;
   }
 
@@ -176,6 +224,7 @@ class Store {
       notes: `Agent A (Scout) appended new target role discovered from ${createdJob.source}.`
     });
 
+    this.saveToDisk();
     return createdJob;
   }
 
@@ -216,6 +265,7 @@ class Store {
       notes: `Agent B (ATS Analyst) tailored résumé variant ${job.matchedResumeName} for ${job.company}. ATS score boosted to 96%.`
     });
 
+    this.saveToDisk();
     return job;
   }
 
@@ -320,9 +370,8 @@ LinkedIn: https://www.linkedin.com/in/mahesh-v-8187476`;
 
   public recordAgentRun(run: AgentRun): void {
     this.agentRuns.unshift(run);
+    this.saveToDisk();
   }
-
-  private resumes: ResumeVariant[] = [...RESUME_VARIANTS];
 
   public getResumes(): ResumeVariant[] {
     return this.resumes;
@@ -352,6 +401,7 @@ LinkedIn: https://www.linkedin.com/in/mahesh-v-8187476`;
       eventType: 'STATUS_CHANGED',
       notes: `New custom résumé variant uploaded: ${resume.fileName} (${resume.roleType}). All jobs re-evaluated against new uploaded résumé.`
     });
+    this.saveToDisk();
     return resume;
   }
 
@@ -364,6 +414,7 @@ LinkedIn: https://www.linkedin.com/in/mahesh-v-8187476`;
       eventType: 'STATUS_CHANGED',
       notes: `Deleted résumé variant (ID: ${id}).`
     });
+    this.saveToDisk();
     return this.resumes;
   }
 
@@ -376,6 +427,7 @@ LinkedIn: https://www.linkedin.com/in/mahesh-v-8187476`;
       eventType: 'STATUS_CHANGED',
       notes: `Cleared all existing résumés from Vault. Ready for fresh user upload.`
     });
+    this.saveToDisk();
     return this.resumes;
   }
 }

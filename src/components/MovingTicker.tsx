@@ -27,21 +27,21 @@ export const MovingTicker: React.FC<MovingTickerProps> = ({
   ];
 
   return (
-    <div className="bg-[#050506] border-b border-zinc-800/80 text-zinc-300 py-1.5 px-3 overflow-hidden text-[11px] font-mono select-none flex items-center relative z-20">
+    <div className="bg-slate-100 border-b border-slate-200 text-slate-700 py-1.5 px-3 overflow-hidden text-[11px] font-mono select-none flex items-center relative z-20">
       <button
         onClick={onTriggerLiveCrawl}
         disabled={isCrawling}
-        className={`flex items-center space-x-2 px-3 py-1 rounded shrink-0 z-10 shadow-sm mr-3 transition-all cursor-pointer ${
+        className={`flex items-center space-x-2 px-3 py-1 rounded-md shrink-0 z-10 shadow-xs mr-3 transition-all cursor-pointer ${
           isCrawling 
-            ? 'bg-amber-950/80 border border-amber-800/80 text-amber-300 animate-pulse'
-            : 'bg-indigo-950/90 hover:bg-indigo-900 border border-indigo-800/80 text-indigo-300 hover:text-white'
+            ? 'bg-amber-100 border border-amber-300 text-amber-800 animate-pulse'
+            : 'bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 hover:text-indigo-900'
         }`}
         title="Click to trigger Live Bengaluru & Remote Job Crawler and instantly refresh dashboard"
       >
         {isCrawling ? (
-          <RefreshCw className="h-3 w-3 text-amber-400 animate-spin" />
+          <RefreshCw className="h-3 w-3 text-amber-600 animate-spin" />
         ) : (
-          <Radio className="h-3 w-3 text-emerald-400 animate-pulse" />
+          <Radio className="h-3 w-3 text-emerald-600 animate-pulse" />
         )}
         <span className="font-bold uppercase text-[10px] tracking-wider">
           {isCrawling ? 'CRAWLING BENGALURU JOBS...' : '⚡ REFRESH LIVE BENGALURU CRAWLER'}
@@ -55,10 +55,10 @@ export const MovingTicker: React.FC<MovingTickerProps> = ({
       >
         <div className="inline-block animate-marquee space-x-8">
           {tickerItems.concat(tickerItems).map((item, idx) => (
-            <span key={idx} className="inline-flex items-center space-x-1.5 text-zinc-300 group-hover:text-amber-300 transition-colors">
-              <Zap className="h-3 w-3 text-amber-400 inline shrink-0" />
+            <span key={idx} className="inline-flex items-center space-x-1.5 text-slate-700 group-hover:text-indigo-600 transition-colors">
+              <Zap className="h-3 w-3 text-amber-500 inline shrink-0" />
               <span>{item}</span>
-              <span className="text-zinc-700 px-2">•</span>
+              <span className="text-slate-300 px-2">•</span>
             </span>
           ))}
         </div>

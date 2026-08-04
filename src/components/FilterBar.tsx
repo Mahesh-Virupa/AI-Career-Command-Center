@@ -37,56 +37,56 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     Boolean(filters.endDate);
 
   return (
-    <div className="bg-[#111113] border border-zinc-800 rounded-xl p-3.5 mb-4 text-xs text-zinc-300 shadow-sm">
+    <div className="bg-white border border-slate-200 rounded-xl p-3.5 mb-4 text-xs text-slate-700 shadow-xs">
       <div className="flex flex-col gap-3">
         
         {/* Top Row: Switcher & Search Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           
           {/* Active vs Soft Deleted Switcher */}
-          <div className="inline-flex rounded-lg bg-[#0A0A0B] p-1 border border-zinc-800">
+          <div className="inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200">
             <button
               onClick={() => handleChange('showDeleted', false)}
-              className={`px-3 py-1 rounded-md font-medium transition-colors flex items-center space-x-1.5 ${
+              className={`px-3 py-1.5 rounded-md font-medium transition-colors flex items-center space-x-1.5 ${
                 !filters.showDeleted
-                  ? 'bg-zinc-800 text-zinc-100 shadow-sm border border-zinc-700/60'
-                  : 'text-zinc-500 hover:text-zinc-300'
+                  ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span>Active Tracker</span>
-              <span className="px-1.5 py-0.2 text-[10px] font-mono bg-zinc-900 rounded-full border border-zinc-700">{totalActiveCount}</span>
+              <span className="px-1.5 py-0.2 text-[10px] font-mono bg-slate-200 text-slate-700 rounded-full font-bold">{totalActiveCount}</span>
             </button>
 
             <button
               onClick={() => handleChange('showDeleted', true)}
-              className={`px-3 py-1 rounded-md font-medium transition-colors flex items-center space-x-1.5 ${
+              className={`px-3 py-1.5 rounded-md font-medium transition-colors flex items-center space-x-1.5 ${
                 filters.showDeleted
-                  ? 'bg-rose-900/40 text-rose-300 border border-rose-800 shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-300'
+                  ? 'bg-rose-50 text-rose-700 border border-rose-200 shadow-xs font-semibold'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Trash2 className="h-3 w-3" />
+              <Trash2 className="h-3.5 w-3.5" />
               <span>Soft Deleted Jobs</span>
-              <span className="px-1.5 py-0.2 text-[10px] font-mono bg-zinc-900 rounded-full border border-zinc-700">{totalDeletedCount}</span>
+              <span className="px-1.5 py-0.2 text-[10px] font-mono bg-rose-100 text-rose-700 rounded-full font-bold">{totalDeletedCount}</span>
             </button>
           </div>
 
           {/* Search Box */}
           <div className="relative min-w-[280px] flex-1">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
               placeholder="Search by company, role title, skills, location..."
               value={filters.searchQuery}
               onChange={(e) => handleChange('searchQuery', e.target.value)}
-              className="w-full pl-8 pr-8 py-1.5 bg-[#0A0A0B] border border-zinc-800 rounded-lg text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 text-xs font-sans"
+              className="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-xs font-sans"
             />
             {filters.searchQuery && (
               <button
                 onClick={() => handleChange('searchQuery', '')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -94,13 +94,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         </div>
 
         {/* Bottom Row: Filters including Calendar Date Range */}
-        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-zinc-800/60">
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
           
           {/* Location Filter */}
           <select
             value={filters.location}
             onChange={(e) => handleChange('location', e.target.value)}
-            className="bg-[#0A0A0B] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-zinc-300 focus:outline-none focus:border-zinc-600"
+            className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:border-indigo-500"
           >
             <option value="all">Location: All</option>
             <option value="Bengaluru">Bengaluru, India</option>
@@ -112,7 +112,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <select
             value={filters.companyType}
             onChange={(e) => handleChange('companyType', e.target.value)}
-            className="bg-[#0A0A0B] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-zinc-300 focus:outline-none focus:border-zinc-600"
+            className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:border-indigo-500"
           >
             <option value="all">Company: All Types</option>
             <option value="GCC">GCC (Global Capability Center)</option>
@@ -126,7 +126,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <select
             value={filters.minAtsScore}
             onChange={(e) => handleChange('minAtsScore', Number(e.target.value))}
-            className="bg-[#0A0A0B] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-zinc-300 focus:outline-none focus:border-zinc-600 font-medium"
+            className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:border-indigo-500 font-medium"
           >
             <option value={80}>ATS Score: &ge; 80 Match [Default Filter]</option>
             <option value={90}>Top Tier Match (&ge; 90)</option>
@@ -138,7 +138,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <select
             value={filters.status}
             onChange={(e) => handleChange('status', e.target.value)}
-            className="bg-[#0A0A0B] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-zinc-300 focus:outline-none focus:border-zinc-600"
+            className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:border-indigo-500"
           >
             <option value="all">Status: All</option>
             <option value="New">Status: New</option>
@@ -149,22 +149,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </select>
 
           {/* Calendar Date Range Picker */}
-          <div className="flex items-center space-x-1.5 bg-[#0A0A0B] border border-zinc-800 rounded-lg px-2 py-1">
-            <Calendar className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
-            <span className="text-zinc-500 font-mono text-[11px]">Date:</span>
+          <div className="flex items-center space-x-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+            <Calendar className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
+            <span className="text-slate-500 font-mono text-[11px]">Date:</span>
             <input
               type="date"
               value={filters.startDate || ''}
               onChange={(e) => handleChange('startDate', e.target.value)}
-              className="bg-transparent text-zinc-200 text-xs focus:outline-none font-mono cursor-pointer"
+              className="bg-transparent text-slate-800 text-xs focus:outline-none font-mono cursor-pointer"
               title="Filter jobs posted/discovered from this date"
             />
-            <span className="text-zinc-600">to</span>
+            <span className="text-slate-400">to</span>
             <input
               type="date"
               value={filters.endDate || ''}
               onChange={(e) => handleChange('endDate', e.target.value)}
-              className="bg-transparent text-zinc-200 text-xs focus:outline-none font-mono cursor-pointer"
+              className="bg-transparent text-slate-800 text-xs focus:outline-none font-mono cursor-pointer"
               title="Filter jobs posted/discovered up to this date"
             />
             {(filters.startDate || filters.endDate) && (
@@ -173,10 +173,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                   handleChange('startDate', '');
                   handleChange('endDate', '');
                 }}
-                className="text-zinc-500 hover:text-zinc-300 pl-1"
+                className="text-slate-400 hover:text-slate-600 pl-1"
                 title="Clear date range filter"
               >
-                <X className="h-3 w-3" />
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>
@@ -185,10 +185,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           {isFiltered && (
             <button
               onClick={onResetFilters}
-              className="inline-flex items-center space-x-1 px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors border border-zinc-700"
+              className="inline-flex items-center space-x-1 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors border border-slate-200"
               title="Clear all active filters"
             >
-              <RotateCcw className="h-3 w-3 text-zinc-400" />
+              <RotateCcw className="h-3.5 w-3.5 text-slate-500" />
               <span>Reset Filters</span>
             </button>
           )}

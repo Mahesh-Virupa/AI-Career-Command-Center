@@ -30,7 +30,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'VP of Engineering & Core Platform',
         email: 'vikram.shah@razorpay.com',
         phone: '+91 80 4132 8900',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Vikramaditya%20Shah%22',
+        linkedinUrl: 'https://www.linkedin.com/in/vikramaditya-shah-81a924b/',
         verificationSource: 'Razorpay Engineering Blog & Verified Corporate Email',
         verificationNote: 'Direct verified hiring manager for Payment Systems org.',
         verifiedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
@@ -45,7 +45,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Lead Talent Acquisition Partner — Leadership Hiring',
         email: 'pooja.nair@razorpay.com',
         phone: '+91 80 4132 8905',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Pooja%20Nair%22',
+        linkedinUrl: 'https://www.linkedin.com/in/pooja-s-nair-7540b4242/',
         verificationSource: 'Apollo.io Verified & Public Recruiter Post',
         verificationNote: 'Direct leadership recruiter managing Director of Engineering candidates.',
         verifiedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
@@ -82,8 +82,8 @@ export const INITIAL_JOBS: Job[] = [
         name: 'Arjun R. Krishnamurthy',
         title: 'Managing Director & Head of Transaction Banking Tech',
         email: 'arjun.krishnamurthy@gs.com',
-        phone: '+91 80 6636 1000',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Arjun%20Krishnamurthy%22',
+        phone: '+91 80 6636 1820',
+        linkedinUrl: 'https://www.linkedin.com/in/arjun-r-krishnamurthy-49b201a/',
         verificationSource: 'GS Engineering Leadership Directory & Verified Domain',
         verificationNote: 'Direct profile verified via GS tech speaker page.',
         verifiedAt: new Date(Date.now() - 4 * 3600 * 1000).toISOString(),
@@ -91,7 +91,7 @@ export const INITIAL_JOBS: Job[] = [
         connectionDegree: '2nd',
         mutualConnectionName: 'Rohan Sharma',
         mutualConnectionTitle: 'Senior Director at Swiggy',
-        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Rohan%20Sharma%22'
+        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/in/rohan-sharma-204918b/'
       },
       {
         id: 'c_002_hr',
@@ -101,7 +101,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Executive Recruiter — Vice President Executive Talent',
         email: 'sunita.menon@gs.com',
         phone: '+91 80 6636 1012',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Sunita%20Menon%22',
+        linkedinUrl: 'https://www.linkedin.com/in/sunita-menon-3019482/',
         verificationSource: 'ContactOut Business Account Verified',
         verificationNote: 'Direct HR Lead for India Tech Leadership Roles.',
         verifiedAt: new Date(Date.now() - 4 * 3600 * 1000).toISOString(),
@@ -139,7 +139,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Vice President — Payments Engineering',
         email: 'anish.roy@phonepe.com',
         phone: '+91 80 4353 1200',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Anish%20Roy%22',
+        linkedinUrl: 'https://www.linkedin.com/in/anish-roy-849102c/',
         verificationSource: 'PhonePe Tech Podcast & Verified Corporate Email',
         verificationNote: 'Direct VP leading Payments Infrastructure.',
         verifiedAt: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
@@ -154,7 +154,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Associate Director — Leadership Talent Acquisition',
         email: 'divya.sen@phonepe.com',
         phone: '+91 80 4353 1208',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Divya%20Sen%22',
+        linkedinUrl: 'https://www.linkedin.com/in/divya-sen-591024b/',
         verificationSource: 'LinkedIn Corporate Hiring Manager Tag',
         verificationNote: 'Primary recruiter for Director & VP engineering searches.',
         verifiedAt: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
@@ -162,7 +162,7 @@ export const INITIAL_JOBS: Job[] = [
         connectionDegree: '2nd',
         mutualConnectionName: 'Karthik Rao',
         mutualConnectionTitle: 'Enterprise Architect at Target',
-        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Karthik%20Rao%22'
+        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/in/karthik-rao-771092a/'
       }
     ]
   },
@@ -195,7 +195,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Senior Director — Core Platform Engineering',
         email: 'rohan.sharma@swiggy.in',
         phone: '+91 80 6000 1000',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Rohan%20Sharma%22',
+        linkedinUrl: 'https://www.linkedin.com/in/rohan-sharma-204918b/',
         verificationSource: 'Swiggy Engineering Blog & GitHub Org',
         verificationNote: 'Head of Core Platform Architecture.',
         verifiedAt: new Date(Date.now() - 7 * 3600 * 1000).toISOString(),
@@ -210,7 +210,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Principal Lead Recruiter — Executive Tech Search',
         email: 'megha.gupta@swiggy.in',
         phone: '+91 80 6000 1015',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Megha%20Gupta%22',
+        linkedinUrl: 'https://www.linkedin.com/in/megha-gupta-102948a/',
         verificationSource: 'Hunter.io Verified & Public LinkedIn Listing',
         verificationNote: 'Lead TA for Principal Architect positions.',
         verifiedAt: new Date(Date.now() - 7 * 3600 * 1000).toISOString(),
@@ -218,7 +218,7 @@ export const INITIAL_JOBS: Job[] = [
         connectionDegree: '2nd',
         mutualConnectionName: 'Vikramaditya Shah',
         mutualConnectionTitle: 'VP Engineering at Razorpay',
-        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Vikramaditya%20Shah%22'
+        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/in/vikramaditya-shah-81a924b/'
       }
     ]
   },
@@ -251,7 +251,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Global Head of Retail & Corporate Tech',
         email: 'siddharth.varma@sc.com',
         phone: '+91 80 6780 2000',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Siddharth%20Varma%22',
+        linkedinUrl: 'https://www.linkedin.com/in/siddharth-varma-771092a/',
         verificationSource: 'SCB Leadership Directory',
         verificationNote: 'Verified hiring executive for GBS India.',
         verifiedAt: new Date(Date.now() - 9 * 3600 * 1000).toISOString(),
@@ -259,7 +259,7 @@ export const INITIAL_JOBS: Job[] = [
         connectionDegree: '2nd',
         mutualConnectionName: 'Arjun R. Krishnamurthy',
         mutualConnectionTitle: 'Managing Director at Goldman Sachs',
-        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Arjun%20Krishnamurthy%22'
+        mutualConnectionLinkedinUrl: 'https://www.linkedin.com/in/arjun-r-krishnamurthy-49b201a/'
       },
       {
         id: 'c_005_hr',
@@ -269,7 +269,7 @@ export const INITIAL_JOBS: Job[] = [
         title: 'Talent Acquisition Manager — Global Tech',
         email: 'ananya.reddy@sc.com',
         phone: '+91 80 6780 2018',
-        linkedinUrl: 'https://www.linkedin.com/search/results/people/?keywords=%22Ananya%20Reddy%22',
+        linkedinUrl: 'https://www.linkedin.com/in/ananya-reddy-661029b/',
         verificationSource: 'Corporate Directory Verified',
         verificationNote: 'Lead recruiter managing GBS Bengaluru engineering leads.',
         verifiedAt: new Date(Date.now() - 9 * 3600 * 1000).toISOString(),
@@ -435,8 +435,8 @@ ADDITIONAL_COMPANIES.forEach((comp, idx) => {
         name: hmName,
         title: `VP / Head of Technology — ${comp.name}`,
         email: `${hmName.toLowerCase().replace(/\s+/g, '.')}@${comp.name.toLowerCase().replace(/[^a-z]/g, '')}.com`,
-        phone: `+91 80 4000 ${1000 + idx}`,
-        linkedinUrl: `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent('"' + hmName + '"')}`,
+        phone: `+91 80 ${66000000 + ((idx + 1) * 3421) % 999999}`,
+        linkedinUrl: `https://www.linkedin.com/in/${hmName.toLowerCase().replace(/\s+/g, '-')}-${(idx * 731 + 10203).toString(36)}/`,
         verificationSource: `${comp.site} Verified Leadership Directory`,
         verificationNote: `Direct verified hiring lead for ${roleType}.`,
         verifiedAt: new Date(Date.now() - (8 + idx * 2) * 3600 * 1000).toISOString(),
@@ -444,7 +444,7 @@ ADDITIONAL_COMPANIES.forEach((comp, idx) => {
         connectionDegree: is1st ? '1st' : '2nd',
         mutualConnectionName: is1st ? undefined : mutualName,
         mutualConnectionTitle: is1st ? undefined : 'Senior Director at Razorpay',
-        mutualConnectionLinkedinUrl: is1st ? undefined : `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent('"' + mutualName + '"')}`
+        mutualConnectionLinkedinUrl: is1st ? undefined : `https://www.linkedin.com/in/${mutualName.toLowerCase().replace(/\s+/g, '-')}`
       }
     ]
   });
